@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="484.0" prefWidth="519.0" style="-fx-background-color: #C4DDB5;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.pawnshop.controller.AddUserFormController">
+   <children>
+      <Label layoutX="162.0" layoutY="27.0" prefHeight="21.0" prefWidth="239.0" text="Add New User to the System" textFill="#7d0d1c">
+         <font>
+            <Font name="Times New Roman Bold" size="19.0" />
+         </font>
+      </Label>
+      <Label layoutX="122.0" layoutY="92.0" prefHeight="16.0" prefWidth="28.0" text=" Id">
+         <font>
+            <Font name="Times New Roman Bold" size="15.0" />
+         </font></Label>
+      <Label layoutX="119.0" layoutY="203.0" text=" UserName">
+         <font>
+            <Font name="Times New Roman Bold" size="15.0" />
+         </font></Label>
+      <Label layoutX="116.0" layoutY="321.0" text="Password">
+         <font>
+            <Font name="Times New Roman Bold" size="15.0" />
+         </font></Label>
+      <TextField fx:id="txtUId" layoutX="77.0" layoutY="118.0" prefHeight="34.0" prefWidth="351.0" promptText="User Id" />
+      <TextField fx:id="txtUName" layoutX="75.0" layoutY="230.0" prefHeight="34.0" prefWidth="351.0" promptText="User Name" />
+      <TextField fx:id="txtPassword" layoutX="75.0" layoutY="345.0" prefHeight="34.0" prefWidth="351.0" promptText="password" />
+      <Button fx:id="btnSaveUser" layoutX="332.0" layoutY="408.0" mnemonicParsing="false" onAction="#btnSaveUserOnAction" prefHeight="41.0" prefWidth="94.0" style="-fx-background-color: #E2D677;" text="Save">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <effect>
+            <DropShadow />
+         </effect>
+      </Button>
+      <ImageView fitHeight="34.0" fitWidth="28.0" layoutX="84.0" layoutY="83.0">
+         <image>
+            <Image url="@../icon/empid.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="34.0" fitWidth="34.0" layoutX="81.0" layoutY="192.0">
+         <image>
+            <Image url="@../icon/empname.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="28.0" fitWidth="22.0" layoutX="84.0" layoutY="311.0">
+         <image>
+            <Image url="@../icon/blackpw.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>

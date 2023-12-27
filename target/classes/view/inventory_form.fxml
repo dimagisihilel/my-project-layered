@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="root" prefHeight="658.0" prefWidth="926.0" style="-fx-background-color: #BDE1A8;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.pawnshop.controller.InventoryFormController">
+   <children>
+      <AnchorPane layoutX="39.0" layoutY="40.0" prefHeight="315.0" prefWidth="845.0" style="-fx-background-color: #D2E491; -fx-background-radius: 15; -fx-border-color: #C27A43; -fx-border-radius: 15; -fx-border-width: 3;">
+         <children>
+            <TextField fx:id="txtPricePerGram" editable="false" layoutX="146.0" layoutY="188.0" prefHeight="34.0" prefWidth="171.0" promptText="Price per gram" />
+            <TextField fx:id="txtDescription" layoutX="116.0" layoutY="248.0" prefHeight="41.0" prefWidth="318.0" promptText="Enter the Description" />
+            <TextField fx:id="txtPaymentId" layoutX="114.0" layoutY="16.0" prefHeight="34.0" prefWidth="171.0" />
+            <Label layoutX="487.0" layoutY="22.0" text="Inventory id" />
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="39.0" layoutY="371.0" prefHeight="264.0" prefWidth="845.0" style="-fx-background-color: #DCD075; -fx-background-radius: 15; -fx-border-color: #C27A43; -fx-border-radius: 15; -fx-border-width: 3;">
+         <children>
+            <TextField fx:id="txtGrantingAmount" layoutX="192.0" layoutY="28.0" onAction="#txtGrantingAmountOnAction" prefHeight="34.0" prefWidth="171.0" promptText="Granting loan Amount" />
+            <Label layoutX="41.0" layoutY="37.0" text="Granting loan amount" />
+            <DatePicker fx:id="txtDateGranted" layoutX="155.0" layoutY="86.0" prefHeight="34.0" prefWidth="198.0" promptText="Date granted" />
+         </children>
+      </AnchorPane>
+      <Label layoutX="435.0" layoutY="8.0" prefHeight="16.0" prefWidth="119.0" text="Inventory Details">
+         <font>
+            <Font name="Times New Roman Bold" size="16.0" />
+         </font></Label>
+      <Label layoutX="68.0" layoutY="173.0" text="Jewellery type" />
+      <Label layoutX="68.0" layoutY="113.0" text="Customer Id" />
+      <TextField fx:id="txtInventoryId" layoutX="615.0" layoutY="54.0" prefHeight="34.0" prefWidth="171.0" promptText="Enter the Inventory Id" />
+      <ComboBox fx:id="cmbItemType" layoutX="165.0" layoutY="169.0" onAction="#cmbItemTypeOnAction" prefHeight="34.0" prefWidth="150.0" promptText="Select the Type" />
+      <ComboBox fx:id="cmbCaratvalue" layoutX="625.0" layoutY="164.0" onAction="#cmbCaratvalueOnAction" prefHeight="34.0" prefWidth="207.0" promptText="Select the Carat Value" />
+      <Label layoutX="527.0" layoutY="173.0" text="Carat value" />
+      <Label layoutX="68.0" layoutY="235.0" text="price per 1gram" />
+      <Label layoutX="521.0" layoutY="224.0" text="Total weight of " />
+      <TextField fx:id="txtWeight" layoutX="638.0" layoutY="223.0" onAction="#txtWeightOnAction" prefHeight="34.0" prefWidth="207.0" promptText="Enter the weight of the item" />
+      <Label layoutX="523.0" layoutY="286.0" text="Assessed value " />
+      <Label layoutX="519.0" layoutY="399.0" text="Remaining Amount" />
+      <Label layoutX="93.0" layoutY="467.0" text="Date Granted" />
+      <Label layoutX="530.0" layoutY="453.0" text="No of installments" />
+      <Label layoutX="81.0" layoutY="531.0" text="Due date for the loan" />
+      <Label layoutX="523.0" layoutY="517.0" text="Total interest rate % " />
+      <Label layoutX="70.0" layoutY="591.0" text="Value of the monthly installment(with interest)" />
+      <TextField fx:id="txtAssessedValue" layoutX="641.0" layoutY="287.0" prefHeight="34.0" prefWidth="198.0" promptText="Assessed Value" />
+      <TextField fx:id="txtRemainingAmount" layoutX="657.0" layoutY="392.0" prefHeight="34.0" prefWidth="171.0" promptText="Remainig amount" />
+      <TextField fx:id="txtNoOfInstallments" layoutX="661.0" layoutY="446.0" onAction="#txtNoOfInstallmentsOnAction" prefHeight="34.0" prefWidth="171.0" promptText="No of installments" />
+      <DatePicker fx:id="txtDueDate" layoutX="232.0" layoutY="522.0" prefHeight="34.0" prefWidth="198.0" promptText="Due date for the loan" />
+      <TextField fx:id="txtTotalInterest" layoutX="669.0" layoutY="510.0" onAction="#txtTotalInterestOnAction" prefHeight="34.0" prefWidth="136.0" promptText="tatal interest " />
+      <TextField fx:id="txtMonthlyInstallment" layoutX="391.0" layoutY="581.0" prefHeight="34.0" prefWidth="171.0" promptText="monthly installment" />
+      <Button layoutX="691.0" layoutY="576.0" mnemonicParsing="false" onAction="#btnSaveInventoryOnAction" prefHeight="34.0" prefWidth="107.0" style="-fx-background-color: #92F15A;" text="Save">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <effect>
+            <DropShadow />
+         </effect></Button>
+      <Label layoutX="68.0" layoutY="296.0" text="Description" />
+      <TextField fx:id="txtCustomerName" editable="false" layoutX="608.0" layoutY="108.0" prefHeight="34.0" prefWidth="171.0" promptText="Customer Name" />
+      <Label layoutX="68.0" layoutY="63.0" text="Payment Id" />
+      <ComboBox fx:id="cmbCustomerId" layoutX="160.0" layoutY="108.0" onAction="#cmbCustomerIdOnAction" prefHeight="34.0" prefWidth="150.0" promptText="Customer Id" />
+      <Label layoutX="519.0" layoutY="239.0" text="the Jewellery (g)" />
+      <Label layoutX="534.0" layoutY="117.0" text=" Name" />
+      <Label layoutX="534.0" layoutY="305.0" text="for the Item" />
+   </children>
+</AnchorPane>

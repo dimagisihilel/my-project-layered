@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="448.0" prefWidth="597.0" style="-fx-background-color: #DCD075;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.pawnshop.controller.MakePaymentFormController">
+   <children>
+      <Label layoutX="244.0" layoutY="20.0" text="Make Payment" textFill="#7d0d1c">
+         <font>
+            <Font name="Times New Roman Bold" size="16.0" />
+         </font></Label>
+      <TextField fx:id="txtPaymentId" layoutX="86.0" layoutY="96.0" onAction="#txtPaymentIdOnAction" prefHeight="36.0" prefWidth="171.0" promptText="Payment Id" />
+      <Label layoutX="90.0" layoutY="68.0" text="Payment Id" />
+      <ComboBox fx:id="cmbInstallmentId" layoutX="354.0" layoutY="195.0" onAction="#cmbInstallmentIdOnAction" prefHeight="36.0" prefWidth="187.0" promptText="Installment Id" />
+      <Label layoutX="356.0" layoutY="160.0" text="Due Installments" />
+      <Label layoutX="91.0" layoutY="254.0" text="Monthly Installment" />
+      <TextField fx:id="txtAmount" layoutX="83.0" layoutY="295.0" prefHeight="36.0" prefWidth="171.0" promptText="Amount to be paid" />
+      <Label layoutX="371.0" layoutY="261.0" text="Date" />
+      <DatePicker fx:id="txtPaymentDate" layoutX="354.0" layoutY="294.0" prefHeight="36.0" prefWidth="187.0" promptText="Payment date" />
+      <Button fx:id="btnMakePayment" layoutX="241.0" layoutY="383.0" mnemonicParsing="false" onAction="#btnMakePaymentOnAction" prefHeight="36.0" prefWidth="115.0" style="-fx-background-color: #AAC998;" text="Make Payment">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <effect>
+            <DropShadow />
+         </effect>
+         <font>
+            <Font name="System Bold" size="11.0" />
+         </font></Button>
+      <Label layoutX="83.0" layoutY="159.0" text="Due Loan Amount" />
+      <Label layoutX="356.0" layoutY="67.0" text="Total Loan" />
+      <TextField fx:id="txtTotalLoan" layoutX="354.0" layoutY="99.0" prefHeight="36.0" prefWidth="187.0" promptText="Total loan" />
+      <TextField fx:id="txtDueLoan" layoutX="83.0" layoutY="195.0" prefHeight="36.0" prefWidth="171.0" promptText="due loan" />
+      <Label layoutX="91.0" layoutY="272.0" text="Amount To Be Paid" />
+   </children>
+</AnchorPane>

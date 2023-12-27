@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="650.0" prefWidth="1120.0" style="-fx-background-color: #D2E297;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.pawnshop.controller.MainFormController">
+   <children>
+      <Line endX="32.0" endY="333.0" layoutX="161.0" layoutY="325.0" startX="32.0" startY="-325.0" />
+      <Label layoutX="80.0" layoutY="604.0" text="Log Out" textFill="#880d1e">
+         <font>
+            <Font name="Times New Roman Bold" size="14.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="24.0" fitWidth="28.0" layoutX="46.0" layoutY="601.0">
+         <image>
+            <Image url="@../icon/logout.png" />
+         </image>
+      </ImageView>
+      <Button fx:id="btnLogout" layoutX="37.0" layoutY="589.0" mnemonicParsing="false" onAction="#btnLogoutOnAction" opacity="0.0" prefHeight="44.0" prefWidth="98.0" text="log out">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <AnchorPane fx:id="root" layoutX="194.0" prefHeight="658.0" prefWidth="926.0" style="-fx-background-color: white;" />
+      <ImageView fitHeight="31.0" fitWidth="28.0" layoutX="34.0" layoutY="134.0">
+         <image>
+            <Image url="@../icon/admin.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="81.0" layoutY="142.0" prefHeight="16.0" prefWidth="30.0" text="User" textFill="#880d1e">
+         <font>
+            <Font name="Times New Roman Bold" size="14.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="132.0" fitWidth="169.0" layoutX="11.0">
+         <image>
+            <Image url="@../icon/logo.jpeg" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="24.0" fitWidth="28.0" layoutX="32.0" layoutY="260.0">
+         <image>
+            <Image url="@../icon/customer.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="80.0" layoutY="266.0" text="Employee" textFill="#880d1e">
+         <font>
+            <Font name="Times New Roman Bold" size="14.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="24.0" fitWidth="30.0" layoutX="30.0" layoutY="326.0">
+         <image>
+            <Image url="@../icon/customer.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="78.0" layoutY="332.0" text="Customer" textFill="#880d1e">
+         <font>
+            <Font name="Times New Roman Bold" size="14.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="24.0" fitWidth="30.0" layoutX="30.0" layoutY="199.0">
+         <image>
+            <Image url="@../icon/dashbd.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="79.0" layoutY="203.0" text="Dash Board" textFill="#880d1e">
+         <font>
+            <Font name="Times New Roman Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="79.0" layoutY="396.0" text="Inventory" textFill="#880d1e">
+         <font>
+            <Font name="Times New Roman Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="78.0" layoutY="458.0" text="Installment Data" textFill="#880d1e">
+         <font>
+            <Font name="Times New Roman Bold" size="14.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="24.0" fitWidth="28.0" layoutX="32.0" layoutY="455.0">
+         <image>
+            <Image url="@../icon/Loan.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="31.0" fitWidth="30.0" layoutX="30.0" layoutY="387.0">
+         <image>
+            <Image url="@../icon/item.png" />
+         </image>
+      </ImageView>
+      <Button fx:id="btnUser" layoutX="11.0" layoutY="134.0" mnemonicParsing="false" onAction="#btnUserOnAction" opacity="0.0" prefHeight="38.0" prefWidth="169.0" text="user">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Button fx:id="btnDashboard" layoutX="4.0" layoutY="190.0" mnemonicParsing="false" onAction="#btnDashboardOnAction" opacity="0.0" prefHeight="38.0" prefWidth="181.0" text="dashboard">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Button fx:id="BtnEmployee" layoutX="7.0" layoutY="257.0" mnemonicParsing="false" onAction="#BtnEmployeeOnAction" opacity="0.0" prefHeight="38.0" prefWidth="181.0" text="Employee">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Button fx:id="btnCustomer" layoutX="6.0" layoutY="321.0" mnemonicParsing="false" onAction="#btnCustomerOnAction" opacity="0.0" prefHeight="38.0" prefWidth="181.0" text="Customer">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Button fx:id="btnInventory" layoutX="6.0" layoutY="385.0" mnemonicParsing="false" onAction="#btnInventoryOnAction" opacity="0.0" prefHeight="38.0" prefWidth="181.0" text="inventory">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Button fx:id="btnInstallmentData" layoutX="6.0" layoutY="448.0" mnemonicParsing="false" onAction="#btnInstallmentDataOnAction" opacity="0.0" prefHeight="38.0" prefWidth="181.0" text="Installments">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+   </children>
+</AnchorPane>

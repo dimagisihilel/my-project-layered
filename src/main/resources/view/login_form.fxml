@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.effect.InnerShadow?>
+<?import javafx.scene.effect.Shadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="root" prefHeight="558.0" prefWidth="884.0" style="-fx-background-color: #EBDD7A;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.pawnshop.controller.LoginFromController">
+   <children>
+      <ImageView fitHeight="510.0" fitWidth="526.0" layoutX="329.0" layoutY="26.0">
+         <image>
+            <Image url="@../icon/whitebg.jpg" />
+         </image>
+         <effect>
+            <InnerShadow>
+               <color>
+                  <Color red="0.5333333611488342" green="0.05098039284348488" blue="0.11764705926179886" />
+               </color>
+            </InnerShadow>
+         </effect>
+      </ImageView>
+      <Button fx:id="btnSignup" layoutX="734.0" layoutY="49.0" mnemonicParsing="false" onAction="#btnSignupOnAction" style="-fx-background-color: #CCE7BC;" text="Sign up" textFill="#880d1e">
+         <effect>
+            <DropShadow />
+         </effect>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Label layoutX="563.0" layoutY="53.0" text="Don't have an Account ?" />
+      <Label layoutX="526.0" layoutY="99.0" prefHeight="54.0" prefWidth="266.0" text="Ranjan Pawn Shop" textFill="#880d1e">
+         <font>
+            <Font name="Times New Roman" size="30.0" />
+         </font>
+      </Label>
+      <Label layoutX="371.0" layoutY="108.0" text="Welcome to" textFill="#ce8147">
+         <font>
+            <Font name="Times New Roman" size="31.0" />
+         </font>
+      </Label>
+      <Label layoutX="380.0" layoutY="149.0" text="Please enter your details below to log in " textFill="#795a5a" />
+      <Label layoutX="380.0" layoutY="198.0" text="Username" textFill="#880d1e">
+         <font>
+            <Font name="Times New Roman" size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="380.0" layoutY="303.0" text="Password" textFill="#880d1e">
+         <font>
+            <Font name="Times New Roman" size="18.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtUsername" layoutX="381.0" layoutY="232.0" prefHeight="35.0" prefWidth="374.0" />
+      <TextField fx:id="txtPassword" layoutX="379.0" layoutY="338.0" prefHeight="35.0" prefWidth="374.0" />
+      <Button fx:id="btnLogin" layoutX="379.0" layoutY="431.0" mnemonicParsing="false" onAction="#btnLoginOnAction" prefHeight="35.0" prefWidth="374.0" style="-fx-background-color: #CCE7BC;" text="Log In " textFill="#880d1e">
+         <effect>
+            <DropShadow />
+         </effect>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Label layoutX="646.0" layoutY="314.0" text="Forgot Password?" textFill="#ce8147">
+         <font>
+            <Font name="Jamrul" size="11.0" />
+         </font>
+         <effect>
+            <Shadow blurType="ONE_PASS_BOX" height="0.0" radius="0.0" width="0.0">
+               <color>
+                  <Color red="0.7368420958518982" green="0.10916179418563843" blue="0.10916179418563843" />
+               </color>
+            </Shadow>
+         </effect>
+      </Label>
+      <Button fx:id="btnForgetpw" layoutX="640.0" layoutY="308.0" mnemonicParsing="false" onAction="#btnForgetpwOnAction" opacity="0.0" prefHeight="24.0" prefWidth="116.0" text="Button">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <ImageView fitHeight="510.0" fitWidth="313.0" layoutX="17.0" layoutY="27.0">
+         <image>
+            <Image url="@../icon/logo.jpeg" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>

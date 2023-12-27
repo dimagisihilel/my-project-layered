@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.20.6.final using JasperReports Library version 6.20.6-5c96b6aa8a39ac1dc6b6bea4b81168e16dd39231  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Bill" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="72c4f585-f87a-4f3f-b255-c694a287ca9c">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="DataAdapter1.jrdax"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT
+    c.customer_id,
+    c.name AS customer_name,
+    (SELECT COALESCE(SUM(i.amount), 0) FROM installments i WHERE i.payment_id = pd.payment_id) AS total_loan_amount,
+    (SELECT COALESCE(SUM(i.amount), 0) FROM installments i WHERE i.payment_id = pd.payment_id AND i.paymentStatus = 'NON-PAID') AS due_loan_amount,
+    (SELECT i.installment_id FROM installments i WHERE i.payment_id = pd.payment_id AND i.paymentStatus = 'PAID' ORDER BY i.installment_id DESC LIMIT 1) AS newly_paid_installment_id,
+    (SELECT COALESCE(SUM(i.amount), 0) FROM installments i WHERE i.payment_id = pd.payment_id AND i.installment_id = newly_paid_installment_id) AS amount_from_new_installment,
+    (SELECT COALESCE(SUM(i.amount), 0) FROM installments i WHERE i.payment_id = pd.payment_id AND i.paymentStatus = 'NON-PAID' AND i.installment_id > newly_paid_installment_id) AS remaining_balance,
+    (SELECT COUNT(*) FROM installments i WHERE i.payment_id = pd.payment_id AND i.paymentStatus = 'NON-PAID') AS remaining_installments
+FROM
+    paymentDetails pd
+JOIN
+    inventory inv ON pd.inventory_id = inv.inventory_id
+JOIN
+    customer c ON inv.customer_id = c.customer_id
+WHERE
+    pd.payment_id = 'P-00001';]]>
+	</queryString>
+	<field name="customer_id" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="customer_id"/>
+		<property name="com.jaspersoft.studio.field.label" value="customer_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="customer"/>
+	</field>
+	<field name="customer_name" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="name"/>
+		<property name="com.jaspersoft.studio.field.label" value="customer_name"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="customer"/>
+	</field>
+	<field name="total_loan_amount" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="total_loan_amount"/>
+		<property name="com.jaspersoft.studio.field.label" value="total_loan_amount"/>
+	</field>
+	<field name="due_loan_amount" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="due_loan_amount"/>
+		<property name="com.jaspersoft.studio.field.label" value="due_loan_amount"/>
+	</field>
+	<field name="newly_paid_installment_id" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="newly_paid_installment_id"/>
+		<property name="com.jaspersoft.studio.field.label" value="newly_paid_installment_id"/>
+	</field>
+	<field name="amount_from_new_installment" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="amount_from_new_installment"/>
+		<property name="com.jaspersoft.studio.field.label" value="amount_from_new_installment"/>
+	</field>
+	<field name="remaining_balance" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="remaining_balance"/>
+		<property name="com.jaspersoft.studio.field.label" value="remaining_balance"/>
+	</field>
+	<field name="remaining_installments" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="remaining_installments"/>
+		<property name="com.jaspersoft.studio.field.label" value="remaining_installments"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="65" splitType="Stretch">
+			<staticText>
+				<reportElement x="153" y="33" width="249" height="30" uuid="dabca3fc-75df-4532-ba84-e0c831a63316"/>
+				<textElement>
+					<font fontName="Times New Roman" size="26" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Ranjan Pawn Brokers]]></text>
+			</staticText>
+			<textField pattern="MMMMM dd, yyyy">
+				<reportElement x="407" y="12" width="100" height="18" uuid="a869cf2d-d61f-442a-bdda-f21fc5018d0f"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="62" splitType="Stretch">
+			<rectangle>
+				<reportElement x="40" y="40" width="460" height="1" uuid="0d6ec092-2130-4de0-a5c5-9d31c930913f"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="191" y="5" width="159" height="30" uuid="7f70cdf5-06d3-46d7-972c-7bfee5e8b2e3"/>
+				<text><![CDATA[No.20, Main Street Panadura]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="294" splitType="Stretch">
+			<staticText>
+				<reportElement x="21" y="49" width="145" height="22" uuid="269c37d3-b83f-466d-9fe3-590787ff1f40"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Total Loan Amount -]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="121" y="0" width="100" height="30" uuid="5d0bff60-ca3c-4f86-aeaf-64a21294c7ab">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="9c6d9c95-f941-4981-b6f5-4df8d033fcff"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{customer_id}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="19" y="0" width="100" height="30" uuid="e347ab41-676b-44d5-9014-fc0e5e9daa58"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Customer Id -]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="439" y="0" width="76" height="26" uuid="59279a25-9474-446c-8827-3eb5cb7e76b5">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="94af74fd-d32a-4583-9604-dd9493644215"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{customer_name}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="332" y="0" width="100" height="27" uuid="420c55d7-92e6-48db-a787-dab7cdca2608"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Customer Name -]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="379" y="55" width="100" height="22" uuid="45a81ff4-88a6-48c3-804a-e5c89916dfd1">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="46bb43f0-bec7-4a97-8bd8-4a723e578317"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{total_loan_amount}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="385" y="92" width="100" height="25" uuid="7586e711-a919-4051-a120-d3bc6d06b920">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="13d816ef-3d7a-4867-9c99-61559a58f798"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{due_loan_amount}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="20" y="88" width="162" height="19" uuid="9268e254-9b15-4944-baca-080f8cd99266"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Due Loan Amount - ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="182" y="131" width="94" height="29" uuid="c7323e27-6de8-4279-a935-34b4d96e5c84">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="57ad58bb-ea1d-4b73-89b0-09a26f366962"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{newly_paid_installment_id}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="21" y="127" width="146" height="22" uuid="8abe1e5e-1d29-49cb-8933-c228da716236"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Paid Installment Id -]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="22" y="171" width="139" height="23" uuid="aef3a688-9010-407a-af5c-824a575b86b7"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Amount Paid - ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="382" y="173" width="92" height="23" uuid="162295e4-de8b-46cc-8680-82622e95e288">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ca8839e3-12fc-4db0-a141-b30188ca3614"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{amount_from_new_installment}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="23" y="214" width="146" height="18" uuid="7c86bc7f-74a0-4e16-bc0d-1897d247487b"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Remaining Balance -]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="380" y="217" width="100" height="18" uuid="2a73267c-e7d6-4959-aee9-95d2da8fb385">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="98bf2460-290e-4989-af04-6606c2d000df"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{remaining_balance}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="340" y="207" width="160" height="1" uuid="c14d66d1-a0fb-49a1-8b14-5948ddedc48f">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="0.6" lineStyle="Solid"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="20" y="258" width="190" height="25" uuid="9c71018b-497a-4bc3-b3fc-01d957b8f500"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Remaining Installments - ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="217" y="261" width="100" height="30" uuid="f146f219-166b-4e55-9813-1f6af2dc9ae1">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="23139c9c-c8c2-40b9-ab3a-86a4752f984b"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{remaining_installments}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="68" splitType="Stretch">
+			<rectangle>
+				<reportElement x="30" y="27" width="485" height="1" uuid="3490badc-8f50-450f-bc84-194b977dd419"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="240" y="35" width="100" height="30" uuid="d08f74e3-d9f3-46f1-ad7a-0bb5650d587c"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Thank you !]]></text>
+			</staticText>
+		</band>
+	</columnFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
