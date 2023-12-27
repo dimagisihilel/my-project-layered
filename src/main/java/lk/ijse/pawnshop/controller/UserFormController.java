@@ -127,6 +127,7 @@ public class UserFormController {
     }
 
     public void refreshTable(){
+        //test
         try {
             List<UserDto> allUsers = userDAO.getAllUsers();
             ObservableList<UserTm> observableList = FXCollections.observableArrayList();
