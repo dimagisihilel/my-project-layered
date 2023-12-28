@@ -42,7 +42,7 @@ public class UserFormController {
     public void setData(){
         ArrayList<UserTm> userTms = new ArrayList<>();
         try {
-            List<UserDto> allUsers = userDAO.getAllUsers();
+            List<UserDto> allUsers = userDAO.getAll();
             for (UserDto user : allUsers) {
                 UserTm userTm = convertDtoToTm(user);
                 userTms.add(userTm);
@@ -86,7 +86,7 @@ public class UserFormController {
                 userDto.setId(idField1.getText());
                 userDto.setUsername(usernameField1.getText());
                 userDto.setPassword(passwordField1.getText());
-                boolean isUpdated = userDAO.updateUser(userDto);
+                boolean isUpdated = userDAO.update(userDto);
                 if(isUpdated){
                     new Alert(Alert.AlertType.INFORMATION, "User updated successfully").show();
                     refreshTable();
@@ -106,7 +106,7 @@ public class UserFormController {
                 return;
             }
             try {
-                boolean isDeleted = userDAO.deleteUser(userDto.getId());
+                boolean isDeleted = userDAO.delete(userDto.getId());
                 if(isDeleted){
                     new Alert(Alert.AlertType.INFORMATION, "User deleted successfully").show();
                     refreshTable();
@@ -127,9 +127,8 @@ public class UserFormController {
     }
 
     public void refreshTable(){
-        //test
         try {
-            List<UserDto> allUsers = userDAO.getAllUsers();
+            List<UserDto> allUsers = userDAO.getAll();
             ObservableList<UserTm> observableList = FXCollections.observableArrayList();
             for (UserDto userDto : allUsers) {
                 observableList.add(convertDtoToTm(userDto));

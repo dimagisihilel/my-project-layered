@@ -25,7 +25,7 @@ public class AddUserFormController {
     public void btnSaveUserOnAction(ActionEvent actionEvent) {
         UserDto userDto = collectData();
         try {
-            boolean isSaved = userDAO.addUser(userDto);
+            boolean isSaved = userDAO.add(userDto);
             if (isSaved){
                 new Alert(Alert.AlertType.INFORMATION, "Saved").show();
                 userFormController.refreshTable();

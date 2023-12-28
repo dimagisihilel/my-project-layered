@@ -52,7 +52,7 @@ public class ViewCustomerFormController {
     private void setData(){
         ArrayList<CustomerTm> customerTms = new ArrayList<>();
         try {
-            List<CustomerDto> allCustomers = customerDAO.getAllCustomers();
+            List<CustomerDto> allCustomers = customerDAO.getAll();
             for (CustomerDto customer : allCustomers) {
                 CustomerTm customerTm = convertDtoToTm(customer);
                 customerTms.add(customerTm);
@@ -110,7 +110,7 @@ public class ViewCustomerFormController {
                 customerDto.setAddress(addressField1.getText());
                 customerDto.setEmail(emailField1.getText());
 
-                boolean isUpdated = customerDAO.updateCustomer(customerDto);
+                boolean isUpdated = customerDAO.update(customerDto);
                 if(isUpdated){
                     new Alert(Alert.AlertType.INFORMATION, "Customer updated successfully").show();
                     refreshTable();
@@ -131,7 +131,7 @@ public class ViewCustomerFormController {
                 return;
             }
             try{
-                boolean isDeleted = customerDAO.deleteCustomer(customerDto.getId());
+                boolean isDeleted = customerDAO.delete(customerDto.getId());
                 if(isDeleted){
                     new Alert(Alert.AlertType.INFORMATION, "Customer deleted successfully").show();
                     refreshTable();
@@ -157,7 +157,7 @@ public class ViewCustomerFormController {
 
     public void refreshTable(){
         try{
-            List<CustomerDto> allCustomers = customerDAO.getAllCustomers();
+            List<CustomerDto> allCustomers = customerDAO.getAll();
             ObservableList<CustomerTm> observableList = FXCollections.observableArrayList();
             for (CustomerDto customerDto : allCustomers) {
                 observableList.add(convertDtoToTm(customerDto));

@@ -44,7 +44,7 @@ public class EmployeeFormController {
     public void setData(){
         ArrayList<EmployeeTm> employeeTms = new ArrayList<>();
         try {
-            List<EmployeeDTO> allEmployees = employeeDAO.getAllEmployees();
+            List<EmployeeDTO> allEmployees = employeeDAO.getAll();
             for (EmployeeDTO employee : allEmployees) {
                 EmployeeTm employeeTm = convertDtoToTm(employee);
                 employeeTms.add(employeeTm);
@@ -97,7 +97,7 @@ public class EmployeeFormController {
                 employeeDto.setAddress(addressField1.getText());
                 employeeDto.setPosition(positionField1.getText());
                 employeeDto.setSalary(Double.parseDouble(salaryField1.getText()));
-                boolean isUpdated = employeeDAO.updateEmployee(employeeDto);
+                boolean isUpdated = employeeDAO.update(employeeDto);
                 if(isUpdated){
                     new Alert(Alert.AlertType.INFORMATION, "Employee updated successfully").show();
                     refreshTable();
@@ -118,7 +118,7 @@ public class EmployeeFormController {
                 return;
             }
             try {
-                boolean isDeleted = employeeDAO.deleteEmployee(employeeDto.getId());
+                boolean isDeleted = employeeDAO.delete(employeeDto.getId());
                 if(isDeleted){
                     new Alert(Alert.AlertType.INFORMATION, "Employee deleted successfully").show();
                     refreshTable();
@@ -142,7 +142,7 @@ public class EmployeeFormController {
 
     public void refreshTable(){
         try {
-            List<EmployeeDTO> allEmployees = employeeDAO.getAllEmployees();
+            List<EmployeeDTO> allEmployees = employeeDAO.getAll();
             ObservableList<EmployeeTm> observableList = FXCollections.observableArrayList();
             for (EmployeeDTO employeeDTO : allEmployees) {
                 observableList.add(convertDtoToTm(employeeDTO));

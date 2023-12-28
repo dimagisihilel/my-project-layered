@@ -38,7 +38,7 @@ public class AddCustomerFormController {
         }
         CustomerDto customerDto = collectData();
         try {
-            boolean isSaved = customerDAO.addCustomer(customerDto);
+            boolean isSaved = customerDAO.add(customerDto);
             if (isSaved){
                 new Alert(Alert.AlertType.INFORMATION, "Saved").show();
                 viewCustomerFormController.refreshTable();

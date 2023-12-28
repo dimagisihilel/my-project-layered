@@ -15,7 +15,7 @@ import java.util.List;
 public class EmployeeDAOImpl implements EmployeeDAO {
 
     @Override
-    public boolean addEmployee(EmployeeDTO employee) throws SQLException {
+    public boolean add(EmployeeDTO employee) throws SQLException {
        /* Connection connection = DbConnection.getInstance().getConnection();
         PreparedStatement preparedStatement = null;
         try {
@@ -38,7 +38,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
         return SQLUtil.execute("INSERT INTO employee (emp_id, name, address, position, salary) VALUES (?,?,?,?,?)",employee.getId(),employee.getName(),employee.getAddress(),employee.getPosition(),employee.getSalary());
     }
     @Override
-    public List<EmployeeDTO> getAllEmployees() throws SQLException {
+    public List<EmployeeDTO> getAll() throws SQLException {
         /*Connection connection = DbConnection.getInstance().getConnection();
         List<EmployeeDTO> employees = new ArrayList<>();
         PreparedStatement preparedStatement = null;
@@ -74,7 +74,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
         return getAllEmployees;
     }
     @Override
-    public boolean updateEmployee(EmployeeDTO employee) throws SQLException {
+    public boolean update(EmployeeDTO employee) throws SQLException {
         /*Connection connection = DbConnection.getInstance().getConnection();
         PreparedStatement preparedStatement = null;
         try {
@@ -97,7 +97,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
         return SQLUtil.execute("UPDATE employee SET name=?, address=?, position=?, salary=? WHERE emp_id=?",employee.getName(),employee.getAddress(),employee.getPosition(),employee.getSalary(),employee.getId());
     }
     @Override
-    public boolean deleteEmployee(String empId) throws SQLException {
+    public boolean delete(String empId) throws SQLException {
         /*Connection connection = DbConnection.getInstance().getConnection();
         PreparedStatement preparedStatement = null;
         try {

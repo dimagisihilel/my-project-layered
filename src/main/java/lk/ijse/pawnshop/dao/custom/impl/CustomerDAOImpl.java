@@ -14,7 +14,7 @@ import java.util.List;
 
 public class CustomerDAOImpl implements CustomerDAO {
     @Override
-    public  boolean addCustomer(CustomerDto customerDto) throws SQLException {
+    public  boolean add(CustomerDto customerDto) throws SQLException {
         /*Connection connection = DbConnection.getInstance().getConnection();
         PreparedStatement preparedStatement = null;
         try {
@@ -38,7 +38,7 @@ public class CustomerDAOImpl implements CustomerDAO {
     }
 
     @Override
-    public  List<CustomerDto> getAllCustomers() throws SQLException {
+    public  List<CustomerDto> getAll() throws SQLException {
        /* Connection connection = DbConnection.getInstance().getConnection();
         List<CustomerDto> customers = new ArrayList<>();
         PreparedStatement preparedStatement = null;
@@ -75,7 +75,7 @@ public class CustomerDAOImpl implements CustomerDAO {
     }
 
     @Override
-    public boolean updateCustomer(CustomerDto customerDto) throws SQLException {
+    public boolean update(CustomerDto customerDto) throws SQLException {
        /* Connection connection = DbConnection.getInstance().getConnection();
         PreparedStatement preparedStatement = null;
         try {
@@ -101,7 +101,7 @@ public class CustomerDAOImpl implements CustomerDAO {
     }
 
     @Override
-    public  boolean deleteCustomer(String customerId) throws SQLException {
+    public  boolean delete(String customerId) throws SQLException {
         /*Connection connection = DbConnection.getInstance().getConnection();
         PreparedStatement preparedStatement = null;
         try {

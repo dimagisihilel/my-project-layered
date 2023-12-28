@@ -106,7 +106,7 @@ public class InventoryFormController {
     }
     public void setCustomerComboBox(){
         try {
-            List<CustomerDto> customers = customerDAO.getAllCustomers();
+            List<CustomerDto> customers = customerDAO.getAll();
             ObservableList<CustomerDto> observableList = FXCollections.observableArrayList(customers);
             cmbCustomerId.setItems(observableList);
         } catch (SQLException e) {

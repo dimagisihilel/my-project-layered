@@ -14,7 +14,7 @@ import java.util.List;
 
 public class UserDAOImpl implements UserDAO {
     @Override
-    public boolean addUser(UserDto user) throws SQLException {
+    public boolean add(UserDto user) throws SQLException {
        /* Connection connection = DbConnection.getInstance().getConnection();
         PreparedStatement preparedStatement = null;
         try {
@@ -35,7 +35,7 @@ public class UserDAOImpl implements UserDAO {
         return SQLUtil.execute("INSERT INTO user (u_id, username, password) VALUES (?,?,?)",user.getId(),user.getUsername(),user.getPassword());
     }
     @Override
-    public List<UserDto> getAllUsers() throws SQLException {
+    public List<UserDto> getAll() throws SQLException {
        /* Connection connection = DbConnection.getInstance().getConnection();
         List<UserDto> users = new ArrayList<>();
         PreparedStatement preparedStatement = null;
@@ -71,7 +71,7 @@ public class UserDAOImpl implements UserDAO {
         return getAllUsers;
     }
     @Override
-    public boolean updateUser(UserDto user) throws SQLException {
+    public boolean update(UserDto user) throws SQLException {
         /*Connection connection = DbConnection.getInstance().getConnection();
         PreparedStatement preparedStatement = null;
         try {
@@ -92,7 +92,7 @@ public class UserDAOImpl implements UserDAO {
         return SQLUtil.execute("UPDATE user SET username=?, password=? WHERE u_id=?",user.getUsername(),user.getPassword(),user.getId());
     }
     @Override
-    public boolean deleteUser(String id) throws SQLException {
+    public boolean delete(String id) throws SQLException {
         /*Connection connection = DbConnection.getInstance().getConnection();
         PreparedStatement preparedStatement = null;
         try {

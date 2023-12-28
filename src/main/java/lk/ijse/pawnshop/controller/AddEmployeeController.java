@@ -31,7 +31,7 @@ public class AddEmployeeController {
     public void btnSaveEmpOnAction(ActionEvent actionEvent) {
         EmployeeDTO employeeDTO = collectData();
         try {
-            boolean isSaved = employeeDAO.addEmployee(employeeDTO);
+            boolean isSaved = employeeDAO.add(employeeDTO);
             if (isSaved){
                 new Alert(Alert.AlertType.INFORMATION, "Saved").show();
                 employeeFormController.refreshTable();
