@@ -4,6 +4,7 @@ import lk.ijse.pawnshop.dao.SQLUtil;
 import lk.ijse.pawnshop.dao.custom.CustomerDAO;
 import lk.ijse.pawnshop.db.DbConnection;
 import lk.ijse.pawnshop.dto.CustomerDto;
+import lk.ijse.pawnshop.entity.Customer;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -68,8 +69,8 @@ public class CustomerDAOImpl implements CustomerDAO {
         ResultSet rst = SQLUtil.execute("SELECT * FROM customer");
         ArrayList<CustomerDto> getAllustomers = new ArrayList<>();
         while (rst.next()){
-            CustomerDto customer = new CustomerDto(rst.getString("customer_id"),rst.getString("name"),rst.getString("contactNo"),rst.getString("NIC"),rst.getString("address"),rst.getString("email"));
-            getAllustomers.add(customer);
+            CustomerDto customerDto = new CustomerDto(rst.getString("customer_id"),rst.getString("name"),rst.getString("contactNo"),rst.getString("NIC"),rst.getString("address"),rst.getString("email"));
+            getAllustomers.add(customerDto);
         }
         return getAllustomers;
     }

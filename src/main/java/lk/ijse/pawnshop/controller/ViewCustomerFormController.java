@@ -16,6 +16,7 @@ import lk.ijse.pawnshop.dao.custom.impl.CustomerDAOImpl;
 import lk.ijse.pawnshop.db.DbConnection;
 import lk.ijse.pawnshop.dto.CustomerDto;
 import lk.ijse.pawnshop.dto.tm.CustomerTm;
+import lk.ijse.pawnshop.entity.Customer;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.design.JasperDesign;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;

@@ -35,7 +35,7 @@ public class LoginFromController {
 
     @FXML
     private TextField txtUsername;
-    private LoginDAOImpl loginDAO = new LoginDAOImpl();
+    private LoginDAO loginDAO = new LoginDAOImpl();
 
     @FXML
     void btnForgetpwOnAction(ActionEvent event) {

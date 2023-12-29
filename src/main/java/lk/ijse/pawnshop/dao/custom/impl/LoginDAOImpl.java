@@ -9,10 +9,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class LoginDAOImpl {
-    //@Override
+public class LoginDAOImpl implements LoginDAO {
+    @Override
     public boolean validateLogin(String username, String password) throws SQLException {
-       Connection connection = DbConnection.getInstance().getConnection();
+       /*Connection connection = DbConnection.getInstance().getConnection();
 
         String sql = "SELECT * FROM user WHERE username= ? AND password = ?";
         try (PreparedStatement pstm = connection.prepareStatement(sql)) {
@@ -22,9 +22,9 @@ public class LoginDAOImpl {
             try (ResultSet resultSet = pstm.executeQuery()) {
                 return resultSet.next();
             }
-        }
-        //return SQLUtil.execute("SELECT * FROM user WHERE username= ? AND password = ?", username, password);
-
+        }*/
+        ResultSet resultSet = SQLUtil.execute("SELECT * FROM user WHERE username= ? AND password = ?", username, password);
+        return resultSet.next();
     }
 }
 

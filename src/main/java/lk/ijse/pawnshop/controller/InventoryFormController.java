@@ -11,6 +11,7 @@ import javafx.scene.control.TextField;
 import javafx.util.StringConverter;
 import lk.ijse.pawnshop.dao.custom.CustomerDAO;
 import lk.ijse.pawnshop.dao.custom.InventoryDAO;
+import lk.ijse.pawnshop.dao.custom.PaymentDetailsDAO;
 import lk.ijse.pawnshop.dao.custom.impl.InventoryDAOImpl;
 import lk.ijse.pawnshop.dao.custom.impl.PaymentDetailsDAOImpl;
 import lk.ijse.pawnshop.dto.CustomerDto;
@@ -77,6 +78,7 @@ public class InventoryFormController {
 
     CustomerDAO customerDAO = new CustomerDAOImpl();
     InventoryDAO inventoryDAO = new InventoryDAOImpl();
+    PaymentDetailsDAO paymentDetailsDAO = new PaymentDetailsDAOImpl();
 
     public void initialize(){
         String id = inventoryDAO.generateNextId();
@@ -84,7 +86,7 @@ public class InventoryFormController {
         setDataForItemType();
         setDataForCaratValues();
         setConverterForCaratValue();
-        String pId = PaymentDetailsDAOImpl.generateNextPaymentId();
+        String pId = paymentDetailsDAO.generateNextPaymentId();
         txtPaymentId.setText(pId);
         setCustomerComboBox();
         cmbCustomerId.setConverter(new StringConverter<CustomerDto>() {
@@ -197,7 +199,7 @@ public class InventoryFormController {
         ob.setInstallmentDtoList(installments);
 
         try {
-            boolean isIssued = PaymentDetailsDAOImpl.issueLoan(ob);
+            boolean isIssued = paymentDetailsDAO.issueLoan(ob);
             if(isIssued){
                 new Alert(Alert.AlertType.INFORMATION,"Issued").show();
                     clearFields();

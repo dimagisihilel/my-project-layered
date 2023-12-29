@@ -4,6 +4,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
+import lk.ijse.pawnshop.dao.custom.PaymentDetailsDAO;
+import lk.ijse.pawnshop.dao.custom.QueryDAO;
+import lk.ijse.pawnshop.dao.custom.impl.QueryDAOImpl;
 import lk.ijse.pawnshop.db.DbConnection;
 import lk.ijse.pawnshop.dao.custom.impl.PaymentDetailsDAOImpl;
 import lk.ijse.pawnshop.util.GmailSender;
@@ -29,6 +32,8 @@ public class MakePaymentFormController {
     public TextField txtTotalLoan;
     public TextField txtDueLoan;
     private InstallmentFormController installmentFormController;
+    QueryDAO queryDAO = new QueryDAOImpl();
+    PaymentDetailsDAO paymentDetailsDAO = new PaymentDetailsDAOImpl();
 
 
 
@@ -47,9 +52,9 @@ public class MakePaymentFormController {
 
         if (!paymentId.isEmpty()) {
             try {
-                double grantedLoanAmount = PaymentDetailsDAOImpl.getGrantedLoanAmount(paymentId);
+                double grantedLoanAmount = queryDAO.getGrantedLoanAmount(paymentId);
 
-                double dueLoanAmount = PaymentDetailsDAOImpl.getDueLoanAmount(paymentId);
+                double dueLoanAmount = queryDAO.getDueLoanAmount(paymentId);
 
                 if (grantedLoanAmount >= 0 && dueLoanAmount >= 0) {
                     txtTotalLoan.setText(String.valueOf(grantedLoanAmount));
@@ -58,7 +63,7 @@ public class MakePaymentFormController {
                     new Alert(Alert.AlertType.ERROR, "Invalid loan amounts").show();
                 }
 
-                List<String> nonPaidInstallmentIds = PaymentDetailsDAOImpl.getNonPaidInstallmentIds(paymentId);
+                List<String> nonPaidInstallmentIds = paymentDetailsDAO.getNonPaidInstallmentIds(paymentId);
 
                 if (!nonPaidInstallmentIds.isEmpty()) {
                     ObservableList<String> observableList = FXCollections.observableArrayList(nonPaidInstallmentIds);
@@ -80,7 +85,7 @@ public class MakePaymentFormController {
 
         if (selectedInstallmentId != null) {
             try {
-                double monthlyInstallmentAmount = PaymentDetailsDAOImpl.getMonthlyInstallmentAmount(selectedInstallmentId);
+                double monthlyInstallmentAmount = paymentDetailsDAO.getMonthlyInstallmentAmount(selectedInstallmentId);
                 txtAmount.setText(String.valueOf(monthlyInstallmentAmount));
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -100,7 +105,7 @@ public class MakePaymentFormController {
         }
 
         try {
-            boolean isPaymentUpdated = PaymentDetailsDAOImpl.updatePaymentStatus(paymentId, selectedInstallmentId);
+            boolean isPaymentUpdated = paymentDetailsDAO.updatePaymentStatus(paymentId, selectedInstallmentId);
 
             if (isPaymentUpdated) {
                 new Alert(Alert.AlertType.INFORMATION, "Payment made successfully").show();
@@ -118,7 +123,7 @@ public class MakePaymentFormController {
 
     public void printReport() throws JRException {
         String PaymentId = txtPaymentId.getText();
-        String customerEmail = PaymentDetailsDAOImpl.getCustomerEmail(PaymentId);//PaymentDetailsDAOImpl.getCustomerEmail(PaymentId);
+        String customerEmail = queryDAO.getCustomerEmail(PaymentId);//PaymentDetailsDAOImpl.getCustomerEmail(PaymentId);
 
         InputStream resourceAsStream = getClass().getResourceAsStream("/report/Bill.jrxml");
         JasperDesign load = JRXmlLoader.load(resourceAsStream);

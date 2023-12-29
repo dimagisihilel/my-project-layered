@@ -11,7 +11,10 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import lk.ijse.pawnshop.dao.CrudDAO;
+import lk.ijse.pawnshop.dao.custom.QueryDAO;
 import lk.ijse.pawnshop.dao.custom.impl.PaymentDetailsDAOImpl;
+import lk.ijse.pawnshop.dao.custom.impl.QueryDAOImpl;
 import lk.ijse.pawnshop.dto.InstallmentDto;
 import lk.ijse.pawnshop.dto.PaymentDetailsDto;
 
@@ -32,6 +35,7 @@ public class InstallmentFormController {
     public TableColumn<InstallmentDto,Double> colMonthlyInstallment;
     public Button btnPay;
     public TableColumn <InstallmentDto,String>colPaymentStatus;
+    QueryDAO queryDAO = new QueryDAOImpl();
 
     public void initialize() {setCellValueFactory();
     }
@@ -41,13 +45,13 @@ public class InstallmentFormController {
 
         if (!paymentId.isEmpty()) {
             try {
-                PaymentDetailsDto paymentDetails = PaymentDetailsDAOImpl.searchByPaymentId(paymentId);
+                PaymentDetailsDto paymentDetails = queryDAO.searchByPaymentId(paymentId);
 
                 if (paymentDetails != null) {
                     txtCustomerId.setText(paymentDetails.getCustomer_id());
                     txtCustomerName.setText(paymentDetails.getName());
 
-                   List<InstallmentDto> installmentDetails = PaymentDetailsDAOImpl.getInstallmentsByPaymentId(paymentId);
+                   List<InstallmentDto> installmentDetails = queryDAO.getInstallmentsByPaymentId(paymentId);
                    populateInstallmentDetails(installmentDetails); //methana modify kala
                 } else {
                     clearFields();
@@ -76,7 +80,7 @@ public class InstallmentFormController {
         LocalDate paymentDate = null;
 
         try {
-            paymentDetails = PaymentDetailsDAOImpl.searchByPaymentId(txtPaymentId.getText());
+            paymentDetails = queryDAO.searchByPaymentId(txtPaymentId.getText());
             paymentDate = paymentDetails.getDateGranted();
         } catch (SQLException e) {
             e.printStackTrace();

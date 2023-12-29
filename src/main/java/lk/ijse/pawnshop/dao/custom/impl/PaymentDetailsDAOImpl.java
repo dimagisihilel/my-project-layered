@@ -1,7 +1,9 @@
 package lk.ijse.pawnshop.dao.custom.impl;
 
+import lk.ijse.pawnshop.dao.SQLUtil;
 import lk.ijse.pawnshop.dao.custom.InstallmentDAO;
 import lk.ijse.pawnshop.dao.custom.InventoryDAO;
+import lk.ijse.pawnshop.dao.custom.PaymentDetailsDAO;
 import lk.ijse.pawnshop.db.DbConnection;
 import lk.ijse.pawnshop.dto.CustomerDto;
 import lk.ijse.pawnshop.dto.InstallmentDto;
@@ -16,20 +18,22 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PaymentDetailsDAOImpl {
+public class PaymentDetailsDAOImpl implements PaymentDetailsDAO {
     static InstallmentDAO installmentDAO = new InstallmentDAOImpl();
     static InventoryDAO inventoryDAO = new InventoryDAOImpl();
 
-    public static String generateNextPaymentId() {
+    @Override
+    public String generateNextPaymentId() {
         String prefix = "P-";
         String nextPaymentId = null;
 
         try {
-            Connection connection = DbConnection.getInstance().getConnection();
+            /*Connection connection = DbConnection.getInstance().getConnection();
             String sql = "SELECT MAX(CAST(SUBSTRING(payment_id, 3) AS SIGNED)) AS maxId FROM paymentDetails";
 
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql);
-                 ResultSet resultSet = preparedStatement.executeQuery()) {
+                 ResultSet resultSet = preparedStatement.executeQuery()) {*/
+            ResultSet resultSet = SQLUtil.execute("SELECT MAX(CAST(SUBSTRING(payment_id, 3) AS SIGNED)) AS maxId FROM paymentDetails");
 
                 if (resultSet.next()) {
                     int maxId = resultSet.getInt("maxId");
@@ -37,15 +41,15 @@ public class PaymentDetailsDAOImpl {
 
                     nextPaymentId = prefix + String.format("%05d", nextId);
                 }
-            }
+            //}
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
         return nextPaymentId;
     }
-
-    public static boolean issueLoan(PaymentDetailsDto paymentDetailsDto) throws SQLException {
+    @Override
+    public boolean issueLoan(PaymentDetailsDto paymentDetailsDto) throws SQLException {
         Connection connection = DbConnection.getInstance().getConnection();
         connection.setAutoCommit(false);
         try{
@@ -71,20 +75,21 @@ public class PaymentDetailsDAOImpl {
         return false;
 
     }
-
-    public static boolean savePaymentDetails(PaymentDetailsDto paymentDetailsDto) throws SQLException {
-        Connection connection = DbConnection.getInstance().getConnection();
+    @Override
+    public boolean savePaymentDetails(PaymentDetailsDto paymentDetailsDto) throws SQLException {
+        /*Connection connection = DbConnection.getInstance().getConnection();
         String query = "INSERT INTO paymentDetails VALUES(?,?,?,?)";
         PreparedStatement ps = connection.prepareStatement(query);
         ps.setString(1, paymentDetailsDto.getPaymentId());
         ps.setString(2, paymentDetailsDto.getInventoryId());
         ps.setString(3, paymentDetailsDto.getDateGranted().toString());
         ps.setString(4, paymentDetailsDto.getDueDate().toString());
-        return ps.executeUpdate() > 0;
+        return ps.executeUpdate() > 0;*/
+        return SQLUtil.execute("INSERT INTO paymentDetails VALUES(?,?,?,?)",paymentDetailsDto.getPaymentId(),paymentDetailsDto.getInventoryId(),paymentDetailsDto.getDateGranted().toString(),paymentDetailsDto.getDueDate().toString());
 
     }
 
-    public static PaymentDetailsDto searchByPaymentId(String paymentId) throws SQLException {
+    /*public static PaymentDetailsDto searchByPaymentId(String paymentId) throws SQLException {
 
         CustomerDto customerDto = null;
         PaymentDetailsDto paymentDetailsDto = null;
@@ -134,9 +139,9 @@ public class PaymentDetailsDAOImpl {
             e.printStackTrace();
         }
         return paymentDetailsDto;
-    }
+    }*/
 
-    public static List<InstallmentDto> getInstallmentsByPaymentId(String paymentId) throws SQLException {
+    /*public static List<InstallmentDto> getInstallmentsByPaymentId(String paymentId) throws SQLException {
         List<InstallmentDto> installments = new ArrayList<>();
         Connection connection = DbConnection.getInstance().getConnection();
 
@@ -170,50 +175,52 @@ public class PaymentDetailsDAOImpl {
             e.printStackTrace();
         }
         return installments;
-    }
-
-    public static List<String> getNonPaidInstallmentIds(String paymentId) throws SQLException {
+    }*/
+    @Override
+    public List<String> getNonPaidInstallmentIds(String paymentId) throws SQLException {
         List<String> nonPaidInstallmentIds = new ArrayList<>();
-        Connection connection = DbConnection.getInstance().getConnection();
+        /*Connection connection = DbConnection.getInstance().getConnection();
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(
                 "SELECT installment_id FROM installments WHERE payment_id = ? AND paymentStatus = 'NON-PAID'")) {
-            preparedStatement.setString(1, paymentId);
+            preparedStatement.setString(1, paymentId);*/
 
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+            try /*(ResultSet resultSet = preparedStatement.executeQuery())*/ {
+            ResultSet resultSet = SQLUtil.execute("SELECT installment_id FROM installments WHERE payment_id = ? AND paymentStatus = 'NON-PAID'", paymentId);
                 while (resultSet.next()) {
                     String installmentId = resultSet.getString("installment_id");
                     nonPaidInstallmentIds.add(installmentId);
                 }
-            }
+           // }
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
         return nonPaidInstallmentIds;
     }
-
-    public static double getMonthlyInstallmentAmount(String installmentId) throws SQLException {
+    @Override
+    public double getMonthlyInstallmentAmount(String installmentId) throws SQLException {
         double monthlyInstallmentAmount = 0.0;
-        Connection connection = DbConnection.getInstance().getConnection();
+/*        Connection connection = DbConnection.getInstance().getConnection();
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(
                 "SELECT amount FROM installments WHERE installment_id = ?")) {
             preparedStatement.setString(1, installmentId);
 
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {*/
+            ResultSet resultSet = SQLUtil.execute("SELECT amount FROM installments WHERE installment_id = ?", installmentId);
                 if (resultSet.next()) {
                     monthlyInstallmentAmount = resultSet.getDouble("amount");
                 }
-            }
-        } catch (SQLException e) {
+           // }
+        /*} catch (SQLException e) {
             e.printStackTrace();
-        }
+        }*/
 
         return monthlyInstallmentAmount;
     }
-
-    public static boolean updatePaymentStatus(String paymentId, String installmentId) throws SQLException {
+    @Override
+    public boolean updatePaymentStatus(String paymentId, String installmentId) throws SQLException {
         Connection connection = DbConnection.getInstance().getConnection();
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(
@@ -228,9 +235,16 @@ public class PaymentDetailsDAOImpl {
             e.printStackTrace();
             throw e;
         }
+        /*try{
+            int rowsUpdated =  SQLUtil.execute("UPDATE installments SET paymentStatus = 'PAID' WHERE payment_id = ? AND installment_id = ?", paymentId, installmentId);
+            return rowsUpdated > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        }*/
     }
 
-    public static double getGrantedLoanAmount(String paymentId) {
+   /* public static double getGrantedLoanAmount(String paymentId) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -255,9 +269,9 @@ public class PaymentDetailsDAOImpl {
         } finally {
             closeResources(resultSet, preparedStatement, null);
         }
-    }
+    }*/
 
-    public static double getDueLoanAmount(String paymentId) {
+    /*public static double getDueLoanAmount(String paymentId) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -282,9 +296,9 @@ public class PaymentDetailsDAOImpl {
         } finally {
             closeResources(resultSet, preparedStatement, connection);
         }
-    }
+    }*/
 
-    public static String getCustomerEmail(String paymentId) {
+    /*public static String getCustomerEmail(String paymentId) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -311,15 +325,15 @@ public class PaymentDetailsDAOImpl {
         }
 
         return customerEmail;
-    }
+    }*/
 
 
-    private static void closeResources(ResultSet resultSet, PreparedStatement preparedStatement, Connection connection) {
+   /* private static void closeResources(ResultSet resultSet, PreparedStatement preparedStatement, Connection connection) {
         try {
             if (resultSet != null) resultSet.close();
             if (preparedStatement != null) preparedStatement.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 }

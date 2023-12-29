@@ -2,6 +2,7 @@ package lk.ijse.pawnshop.dao.custom;
 
 import lk.ijse.pawnshop.dao.CrudDAO;
 import lk.ijse.pawnshop.dto.CustomerDto;
+import lk.ijse.pawnshop.entity.Customer;
 
 import java.sql.SQLException;
 import java.util.List;
