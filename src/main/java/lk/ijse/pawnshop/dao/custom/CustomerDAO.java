@@ -7,7 +7,7 @@ import lk.ijse.pawnshop.entity.Customer;
 import java.sql.SQLException;
 import java.util.List;
 
-public interface CustomerDAO extends CrudDAO<CustomerDto> {
+public interface CustomerDAO extends CrudDAO<Customer> {
    /* boolean addCustomer(CustomerDto customerDto) throws SQLException;
     List<CustomerDto> getAllCustomers() throws SQLException;
     boolean updateCustomer(CustomerDto customerDto) throws SQLException;

@@ -4,6 +4,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
+import lk.ijse.pawnshop.bo.BOFactory;
+import lk.ijse.pawnshop.bo.custom.PaymentDetailsBO;
 import lk.ijse.pawnshop.dao.custom.PaymentDetailsDAO;
 import lk.ijse.pawnshop.dao.custom.QueryDAO;
 import lk.ijse.pawnshop.dao.custom.impl.QueryDAOImpl;
@@ -33,7 +35,8 @@ public class MakePaymentFormController {
     public TextField txtDueLoan;
     private InstallmentFormController installmentFormController;
     QueryDAO queryDAO = new QueryDAOImpl();
-    PaymentDetailsDAO paymentDetailsDAO = new PaymentDetailsDAOImpl();
+    //PaymentDetailsDAO paymentDetailsDAO = new PaymentDetailsDAOImpl();
+    PaymentDetailsBO paymentDetailsBO = (PaymentDetailsBO) BOFactory.getBoFactory().getBO(BOFactory.BOType.PAYMENTDETAILS);
 
 
 
@@ -63,7 +66,7 @@ public class MakePaymentFormController {
                     new Alert(Alert.AlertType.ERROR, "Invalid loan amounts").show();
                 }
 
-                List<String> nonPaidInstallmentIds = paymentDetailsDAO.getNonPaidInstallmentIds(paymentId);
+                List<String> nonPaidInstallmentIds = paymentDetailsBO.getNonPaidInstallmentIds(paymentId);
 
                 if (!nonPaidInstallmentIds.isEmpty()) {
                     ObservableList<String> observableList = FXCollections.observableArrayList(nonPaidInstallmentIds);
@@ -85,7 +88,7 @@ public class MakePaymentFormController {
 
         if (selectedInstallmentId != null) {
             try {
-                double monthlyInstallmentAmount = paymentDetailsDAO.getMonthlyInstallmentAmount(selectedInstallmentId);
+                double monthlyInstallmentAmount = paymentDetailsBO.getMonthlyInstallmentAmount(selectedInstallmentId);
                 txtAmount.setText(String.valueOf(monthlyInstallmentAmount));
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -105,7 +108,7 @@ public class MakePaymentFormController {
         }
 
         try {
-            boolean isPaymentUpdated = paymentDetailsDAO.updatePaymentStatus(paymentId, selectedInstallmentId);
+            boolean isPaymentUpdated = paymentDetailsBO.updatePaymentStatus(paymentId, selectedInstallmentId);
 
             if (isPaymentUpdated) {
                 new Alert(Alert.AlertType.INFORMATION, "Payment made successfully").show();

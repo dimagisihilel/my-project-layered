@@ -10,6 +10,8 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import lk.ijse.pawnshop.bo.BOFactory;
+import lk.ijse.pawnshop.bo.custom.EmployeeBO;
 import lk.ijse.pawnshop.dao.custom.EmployeeDAO;
 import lk.ijse.pawnshop.dto.EmployeeDTO;
 import lk.ijse.pawnshop.dto.tm.EmployeeTm;
@@ -34,7 +36,8 @@ public class EmployeeFormController {
     public TableColumn <EmployeeTm,Button>colAction2;
     public Button btnAddEmp;
     public Button btnViewEmp;
-    EmployeeDAO employeeDAO = new EmployeeDAOImpl();
+    //EmployeeDAO employeeDAO = new EmployeeDAOImpl();
+    EmployeeBO employeeBO = (EmployeeBO) BOFactory.getBoFactory().getBO(BOFactory.BOType.EMPLOYEE);
 
     public void initialize(){
         setData();
@@ -44,7 +47,7 @@ public class EmployeeFormController {
     public void setData(){
         ArrayList<EmployeeTm> employeeTms = new ArrayList<>();
         try {
-            List<EmployeeDTO> allEmployees = employeeDAO.getAll();
+            List<EmployeeDTO> allEmployees = employeeBO.getAllEmployees();
             for (EmployeeDTO employee : allEmployees) {
                 EmployeeTm employeeTm = convertDtoToTm(employee);
                 employeeTms.add(employeeTm);
@@ -97,7 +100,7 @@ public class EmployeeFormController {
                 employeeDto.setAddress(addressField1.getText());
                 employeeDto.setPosition(positionField1.getText());
                 employeeDto.setSalary(Double.parseDouble(salaryField1.getText()));
-                boolean isUpdated = employeeDAO.update(employeeDto);
+                boolean isUpdated = employeeBO.updateEmployee(employeeDto);
                 if(isUpdated){
                     new Alert(Alert.AlertType.INFORMATION, "Employee updated successfully").show();
                     refreshTable();
@@ -118,7 +121,7 @@ public class EmployeeFormController {
                 return;
             }
             try {
-                boolean isDeleted = employeeDAO.delete(employeeDto.getId());
+                boolean isDeleted = employeeBO.deleteEmployee(employeeDto.getId());
                 if(isDeleted){
                     new Alert(Alert.AlertType.INFORMATION, "Employee deleted successfully").show();
                     refreshTable();
@@ -142,7 +145,7 @@ public class EmployeeFormController {
 
     public void refreshTable(){
         try {
-            List<EmployeeDTO> allEmployees = employeeDAO.getAll();
+            List<EmployeeDTO> allEmployees = employeeBO.getAllEmployees();
             ObservableList<EmployeeTm> observableList = FXCollections.observableArrayList();
             for (EmployeeDTO employeeDTO : allEmployees) {
                 observableList.add(convertDtoToTm(employeeDTO));

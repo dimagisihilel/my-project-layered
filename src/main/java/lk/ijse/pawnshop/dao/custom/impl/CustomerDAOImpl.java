@@ -15,7 +15,7 @@ import java.util.List;
 
 public class CustomerDAOImpl implements CustomerDAO {
     @Override
-    public  boolean add(CustomerDto customerDto) throws SQLException {
+    public  boolean add(Customer entity) throws SQLException {
         /*Connection connection = DbConnection.getInstance().getConnection();
         PreparedStatement preparedStatement = null;
         try {
@@ -35,11 +35,11 @@ public class CustomerDAOImpl implements CustomerDAO {
         }finally {
             closeStatement(preparedStatement);
         }*/
-        return SQLUtil.execute("INSERT INTO customer (customer_id, name, contactNo, NIC, address,email) VALUES (?,?,?,?,?,?)",customerDto.getId(),customerDto.getName(),customerDto.getContactNo(),customerDto.getNIC(),customerDto.getAddress(),customerDto.getEmail());
+        return SQLUtil.execute("INSERT INTO customer (customer_id, name, contactNo, NIC, address,email) VALUES (?,?,?,?,?,?)",entity.getId(),entity.getName(),entity.getContactNo(),entity.getNIC(),entity.getAddress(),entity.getEmail());
     }
 
     @Override
-    public  List<CustomerDto> getAll() throws SQLException {
+    public  List<Customer> getAll() throws SQLException {
        /* Connection connection = DbConnection.getInstance().getConnection();
         List<CustomerDto> customers = new ArrayList<>();
         PreparedStatement preparedStatement = null;
@@ -67,16 +67,16 @@ public class CustomerDAOImpl implements CustomerDAO {
         }
         return customers;*/
         ResultSet rst = SQLUtil.execute("SELECT * FROM customer");
-        ArrayList<CustomerDto> getAllustomers = new ArrayList<>();
+        ArrayList<Customer> getAllustomers = new ArrayList<>();
         while (rst.next()){
-            CustomerDto customerDto = new CustomerDto(rst.getString("customer_id"),rst.getString("name"),rst.getString("contactNo"),rst.getString("NIC"),rst.getString("address"),rst.getString("email"));
-            getAllustomers.add(customerDto);
+            Customer entity = new Customer(rst.getString("customer_id"),rst.getString("name"),rst.getString("contactNo"),rst.getString("NIC"),rst.getString("address"),rst.getString("email"));
+            getAllustomers.add(entity);
         }
         return getAllustomers;
     }
 
     @Override
-    public boolean update(CustomerDto customerDto) throws SQLException {
+    public boolean update(Customer entity) throws SQLException {
        /* Connection connection = DbConnection.getInstance().getConnection();
         PreparedStatement preparedStatement = null;
         try {
@@ -97,7 +97,7 @@ public class CustomerDAOImpl implements CustomerDAO {
         }finally {
             closeStatement(preparedStatement);
         }*/
-        return SQLUtil.execute("UPDATE customer SET name = ?, contactNo = ?, NIC = ?, address = ?, email = ? WHERE customer_id = ?",customerDto.getName(),customerDto.getContactNo(),customerDto.getNIC(),customerDto.getAddress(),customerDto.getEmail(),customerDto.getId());
+        return SQLUtil.execute("UPDATE customer SET name = ?, contactNo = ?, NIC = ?, address = ?, email = ? WHERE customer_id = ?",entity.getName(),entity.getContactNo(),entity.getNIC(),entity.getAddress(),entity.getEmail(),entity.getId());
 
     }
 

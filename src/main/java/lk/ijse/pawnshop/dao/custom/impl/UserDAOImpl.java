@@ -4,6 +4,7 @@ import lk.ijse.pawnshop.dao.SQLUtil;
 import lk.ijse.pawnshop.dao.custom.UserDAO;
 import lk.ijse.pawnshop.db.DbConnection;
 import lk.ijse.pawnshop.dto.UserDto;
+import lk.ijse.pawnshop.entity.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,7 +15,7 @@ import java.util.List;
 
 public class UserDAOImpl implements UserDAO {
     @Override
-    public boolean add(UserDto user) throws SQLException {
+    public boolean add(User entity) throws SQLException {
        /* Connection connection = DbConnection.getInstance().getConnection();
         PreparedStatement preparedStatement = null;
         try {
@@ -32,10 +33,10 @@ public class UserDAOImpl implements UserDAO {
         } finally {
             closeStatement(preparedStatement);
         }*/
-        return SQLUtil.execute("INSERT INTO user (u_id, username, password) VALUES (?,?,?)",user.getId(),user.getUsername(),user.getPassword());
+        return SQLUtil.execute("INSERT INTO user (u_id, username, password) VALUES (?,?,?)",entity.getId(),entity.getUsername(),entity.getPassword());
     }
     @Override
-    public List<UserDto> getAll() throws SQLException {
+    public List<User> getAll() throws SQLException {
        /* Connection connection = DbConnection.getInstance().getConnection();
         List<UserDto> users = new ArrayList<>();
         PreparedStatement preparedStatement = null;
@@ -62,16 +63,16 @@ public class UserDAOImpl implements UserDAO {
 
         return users;*/
         ResultSet rst = SQLUtil.execute("SELECT * FROM user");
-        ArrayList<UserDto> getAllUsers = new ArrayList<>();
+        ArrayList<User> getAllUsers = new ArrayList<>();
         while (rst.next()){
-            UserDto user = new UserDto(
+            User entity = new User(
                 rst.getString("u_id"),rst.getString("username"),rst.getString("password"));
-            getAllUsers.add(user);
+            getAllUsers.add(entity);
         }
         return getAllUsers;
     }
     @Override
-    public boolean update(UserDto user) throws SQLException {
+    public boolean update(User entity) throws SQLException {
         /*Connection connection = DbConnection.getInstance().getConnection();
         PreparedStatement preparedStatement = null;
         try {
@@ -89,7 +90,7 @@ public class UserDAOImpl implements UserDAO {
         } finally {
             closeStatement(preparedStatement);
         }*/
-        return SQLUtil.execute("UPDATE user SET username=?, password=? WHERE u_id=?",user.getUsername(),user.getPassword(),user.getId());
+        return SQLUtil.execute("UPDATE user SET username=?, password=? WHERE u_id=?",entity.getUsername(),entity.getPassword(),entity.getId());
     }
     @Override
     public boolean delete(String id) throws SQLException {

@@ -9,6 +9,10 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.util.StringConverter;
+import lk.ijse.pawnshop.bo.BOFactory;
+import lk.ijse.pawnshop.bo.custom.CustomerBO;
+import lk.ijse.pawnshop.bo.custom.InventoryBO;
+import lk.ijse.pawnshop.bo.custom.PaymentDetailsBO;
 import lk.ijse.pawnshop.dao.custom.CustomerDAO;
 import lk.ijse.pawnshop.dao.custom.InventoryDAO;
 import lk.ijse.pawnshop.dao.custom.PaymentDetailsDAO;
@@ -76,17 +80,20 @@ public class InventoryFormController {
     @FXML
     private TextField txtWeight;
 
-    CustomerDAO customerDAO = new CustomerDAOImpl();
-    InventoryDAO inventoryDAO = new InventoryDAOImpl();
-    PaymentDetailsDAO paymentDetailsDAO = new PaymentDetailsDAOImpl();
+    //CustomerDAO customerDAO = new CustomerDAOImpl();
+    //InventoryDAO inventoryDAO = new InventoryDAOImpl();
+    //PaymentDetailsDAO paymentDetailsDAO = new PaymentDetailsDAOImpl();
+    CustomerBO customerBO = (CustomerBO) BOFactory.getBoFactory().getBO(BOFactory.BOType.CUSTOMER);
+    InventoryBO inventoryBO = (InventoryBO) BOFactory.getBoFactory().getBO(BOFactory.BOType.INVENTORY);
+    PaymentDetailsBO paymentDetailsBO = (PaymentDetailsBO) BOFactory.getBoFactory().getBO(BOFactory.BOType.PAYMENTDETAILS);
 
     public void initialize(){
-        String id = inventoryDAO.generateNextId();
+        String id = inventoryBO.generateNextId();
         txtInventoryId.setText(id);
         setDataForItemType();
         setDataForCaratValues();
         setConverterForCaratValue();
-        String pId = paymentDetailsDAO.generateNextPaymentId();
+        String pId = paymentDetailsBO.generateNextPaymentId();
         txtPaymentId.setText(pId);
         setCustomerComboBox();
         cmbCustomerId.setConverter(new StringConverter<CustomerDto>() {
@@ -108,7 +115,7 @@ public class InventoryFormController {
     }
     public void setCustomerComboBox(){
         try {
-            List<CustomerDto> customers = customerDAO.getAll();
+            List<CustomerDto> customers = customerBO.getAllCustomers();
             ObservableList<CustomerDto> observableList = FXCollections.observableArrayList(customers);
             cmbCustomerId.setItems(observableList);
         } catch (SQLException e) {
@@ -199,7 +206,7 @@ public class InventoryFormController {
         ob.setInstallmentDtoList(installments);
 
         try {
-            boolean isIssued = paymentDetailsDAO.issueLoan(ob);
+            boolean isIssued = paymentDetailsBO.issueLoan(ob);
             if(isIssued){
                 new Alert(Alert.AlertType.INFORMATION,"Issued").show();
                     clearFields();

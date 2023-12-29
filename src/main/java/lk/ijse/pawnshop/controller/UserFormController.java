@@ -10,6 +10,8 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import lk.ijse.pawnshop.bo.BOFactory;
+import lk.ijse.pawnshop.bo.custom.UserBO;
 import lk.ijse.pawnshop.dao.custom.UserDAO;
 import lk.ijse.pawnshop.dto.UserDto;
 import lk.ijse.pawnshop.dto.tm.UserTm;
@@ -31,7 +33,8 @@ public class UserFormController {
     public TableColumn<UserTm, TextField> colpassword;
     public TableColumn<UserTm, Button> colAction1;
     public TableColumn<UserTm, Button>colAction2;
-    UserDAO userDAO = new UserDAOImpl();
+   // UserDAO userDAO = new UserDAOImpl();
+    UserBO userBO = (UserBO)BOFactory.getBoFactory().getBO(BOFactory.BOType.USER);
 
 
     public void initialize() {
@@ -42,7 +45,7 @@ public class UserFormController {
     public void setData(){
         ArrayList<UserTm> userTms = new ArrayList<>();
         try {
-            List<UserDto> allUsers = userDAO.getAll();
+            List<UserDto> allUsers = userBO.getAllUsers();
             for (UserDto user : allUsers) {
                 UserTm userTm = convertDtoToTm(user);
                 userTms.add(userTm);
@@ -86,7 +89,7 @@ public class UserFormController {
                 userDto.setId(idField1.getText());
                 userDto.setUsername(usernameField1.getText());
                 userDto.setPassword(passwordField1.getText());
-                boolean isUpdated = userDAO.update(userDto);
+                boolean isUpdated = userBO.updateUser(userDto);
                 if(isUpdated){
                     new Alert(Alert.AlertType.INFORMATION, "User updated successfully").show();
                     refreshTable();
@@ -106,7 +109,7 @@ public class UserFormController {
                 return;
             }
             try {
-                boolean isDeleted = userDAO.delete(userDto.getId());
+                boolean isDeleted = userBO.deleteUser(userDto.getId());
                 if(isDeleted){
                     new Alert(Alert.AlertType.INFORMATION, "User deleted successfully").show();
                     refreshTable();
@@ -128,7 +131,7 @@ public class UserFormController {
 
     public void refreshTable(){
         try {
-            List<UserDto> allUsers = userDAO.getAll();
+            List<UserDto> allUsers = userBO.getAllUsers();
             ObservableList<UserTm> observableList = FXCollections.observableArrayList();
             for (UserDto userDto : allUsers) {
                 observableList.add(convertDtoToTm(userDto));

@@ -5,6 +5,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
+import lk.ijse.pawnshop.bo.BOFactory;
+import lk.ijse.pawnshop.bo.custom.EmployeeBO;
 import lk.ijse.pawnshop.dao.custom.EmployeeDAO;
 import lk.ijse.pawnshop.dto.EmployeeDTO;
 import lk.ijse.pawnshop.dao.custom.impl.EmployeeDAOImpl;
@@ -22,7 +24,8 @@ public class AddEmployeeController {
     public TextField txtEmpAddress;
     public Button btnSaveEmp;
     private EmployeeFormController employeeFormController;
-    EmployeeDAO employeeDAO = new EmployeeDAOImpl();
+    //EmployeeDAO employeeDAO = new EmployeeDAOImpl();
+    EmployeeBO employeeBO = (EmployeeBO) BOFactory.getBoFactory().getBO(BOFactory.BOType.EMPLOYEE);
 
     public void setParentController(EmployeeFormController employeeFormController) {
         this.employeeFormController = employeeFormController;
@@ -31,7 +34,7 @@ public class AddEmployeeController {
     public void btnSaveEmpOnAction(ActionEvent actionEvent) {
         EmployeeDTO employeeDTO = collectData();
         try {
-            boolean isSaved = employeeDAO.add(employeeDTO);
+            boolean isSaved = employeeBO.addEmployee(employeeDTO);
             if (isSaved){
                 new Alert(Alert.AlertType.INFORMATION, "Saved").show();
                 employeeFormController.refreshTable();

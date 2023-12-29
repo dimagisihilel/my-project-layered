@@ -5,6 +5,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
+import lk.ijse.pawnshop.bo.BOFactory;
+import lk.ijse.pawnshop.bo.custom.CustomerBO;
 import lk.ijse.pawnshop.dao.custom.CustomerDAO;
 import lk.ijse.pawnshop.dto.CustomerDto;
 import lk.ijse.pawnshop.dao.custom.impl.CustomerDAOImpl;
@@ -24,7 +26,8 @@ public class AddCustomerFormController {
 
     private ViewCustomerFormController viewCustomerFormController;
 
-    CustomerDAO customerDAO = new CustomerDAOImpl();
+    //CustomerDAO customerDAO = new CustomerDAOImpl();
+    CustomerBO customerBO = (CustomerBO) BOFactory.getBoFactory().getBO(BOFactory.BOType.CUSTOMER);
 
     public void setParentController(ViewCustomerFormController viewCustomerFormController){
         this.viewCustomerFormController = viewCustomerFormController;
@@ -38,7 +41,7 @@ public class AddCustomerFormController {
         }
         CustomerDto customerDto = collectData();
         try {
-            boolean isSaved = customerDAO.add(customerDto);
+            boolean isSaved = customerBO.addCustomer(customerDto);
             if (isSaved){
                 new Alert(Alert.AlertType.INFORMATION, "Saved").show();
                 viewCustomerFormController.refreshTable();

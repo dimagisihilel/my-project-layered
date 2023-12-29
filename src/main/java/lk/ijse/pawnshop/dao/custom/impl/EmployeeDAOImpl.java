@@ -4,6 +4,7 @@ import lk.ijse.pawnshop.dao.SQLUtil;
 import lk.ijse.pawnshop.dao.custom.EmployeeDAO;
 import lk.ijse.pawnshop.db.DbConnection;
 import lk.ijse.pawnshop.dto.EmployeeDTO;
+import lk.ijse.pawnshop.entity.Employee;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,7 +16,7 @@ import java.util.List;
 public class EmployeeDAOImpl implements EmployeeDAO {
 
     @Override
-    public boolean add(EmployeeDTO employee) throws SQLException {
+    public boolean add(Employee entity) throws SQLException {
        /* Connection connection = DbConnection.getInstance().getConnection();
         PreparedStatement preparedStatement = null;
         try {
@@ -35,10 +36,10 @@ public class EmployeeDAOImpl implements EmployeeDAO {
         } finally {
             closeStatement(preparedStatement);
         }*/
-        return SQLUtil.execute("INSERT INTO employee (emp_id, name, address, position, salary) VALUES (?,?,?,?,?)",employee.getId(),employee.getName(),employee.getAddress(),employee.getPosition(),employee.getSalary());
+        return SQLUtil.execute("INSERT INTO employee (emp_id, name, address, position, salary) VALUES (?,?,?,?,?)",entity.getId(),entity.getName(),entity.getAddress(),entity.getPosition(),entity.getSalary());
     }
     @Override
-    public List<EmployeeDTO> getAll() throws SQLException {
+    public List<Employee> getAll() throws SQLException {
         /*Connection connection = DbConnection.getInstance().getConnection();
         List<EmployeeDTO> employees = new ArrayList<>();
         PreparedStatement preparedStatement = null;
@@ -66,15 +67,15 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 
         return employees;*/
         ResultSet rst = SQLUtil.execute("SELECT * FROM employee");
-        ArrayList<EmployeeDTO> getAllEmployees = new ArrayList<>();
+        ArrayList<Employee> getAllEmployees = new ArrayList<>();
         while (rst.next()) {
-            EmployeeDTO employee = new EmployeeDTO(rst.getString("emp_id"),rst.getString("name"),rst.getString("address"),rst.getString("position"),rst.getDouble("salary"));
-            getAllEmployees.add(employee);
+            Employee entity = new Employee(rst.getString("emp_id"),rst.getString("name"),rst.getString("address"),rst.getString("position"),rst.getDouble("salary"));
+            getAllEmployees.add(entity);
         }
         return getAllEmployees;
     }
     @Override
-    public boolean update(EmployeeDTO employee) throws SQLException {
+    public boolean update(Employee entity) throws SQLException {
         /*Connection connection = DbConnection.getInstance().getConnection();
         PreparedStatement preparedStatement = null;
         try {
@@ -94,7 +95,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
         } finally {
             closeStatement(preparedStatement);
         }*/
-        return SQLUtil.execute("UPDATE employee SET name=?, address=?, position=?, salary=? WHERE emp_id=?",employee.getName(),employee.getAddress(),employee.getPosition(),employee.getSalary(),employee.getId());
+        return SQLUtil.execute("UPDATE employee SET name=?, address=?, position=?, salary=? WHERE emp_id=?",entity.getName(),entity.getAddress(),entity.getPosition(),entity.getSalary(),entity.getId());
     }
     @Override
     public boolean delete(String empId) throws SQLException {

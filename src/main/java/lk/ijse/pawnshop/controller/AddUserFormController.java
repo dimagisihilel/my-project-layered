@@ -3,6 +3,8 @@ package lk.ijse.pawnshop.controller;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
+import lk.ijse.pawnshop.bo.BOFactory;
+import lk.ijse.pawnshop.bo.custom.UserBO;
 import lk.ijse.pawnshop.dao.custom.UserDAO;
 import lk.ijse.pawnshop.dto.UserDto;
 import lk.ijse.pawnshop.dao.custom.impl.UserDAOImpl;
@@ -16,7 +18,8 @@ public class AddUserFormController {
     public TextField txtPassword;
 
     private UserFormController userFormController;
-    UserDAO userDAO = new UserDAOImpl();
+    //UserDAO userDAO = new UserDAOImpl();
+    UserBO userBO = (UserBO) BOFactory.getBoFactory().getBO(BOFactory.BOType.USER);
 
     public void setParentController(UserFormController userFormController) {
         this.userFormController = userFormController;
@@ -25,7 +28,7 @@ public class AddUserFormController {
     public void btnSaveUserOnAction(ActionEvent actionEvent) {
         UserDto userDto = collectData();
         try {
-            boolean isSaved = userDAO.add(userDto);
+            boolean isSaved = userBO.addUser(userDto);
             if (isSaved){
                 new Alert(Alert.AlertType.INFORMATION, "Saved").show();
                 userFormController.refreshTable();

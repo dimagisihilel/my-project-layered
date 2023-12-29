@@ -10,6 +10,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import lk.ijse.pawnshop.bo.BOFactory;
+import lk.ijse.pawnshop.bo.custom.LoginBO;
 import lk.ijse.pawnshop.dao.custom.LoginDAO;
 import lk.ijse.pawnshop.dto.UserDto;
 import lk.ijse.pawnshop.dao.custom.impl.LoginDAOImpl;
@@ -35,7 +37,8 @@ public class LoginFromController {
 
     @FXML
     private TextField txtUsername;
-    private LoginDAO loginDAO = new LoginDAOImpl();
+   // private LoginDAO loginDAO = new LoginDAOImpl();
+    LoginBO loginBO = (LoginBO) BOFactory.getBoFactory().getBO(BOFactory.BOType.LOGIN);
 
     @FXML
     void btnForgetpwOnAction(ActionEvent event) {
@@ -51,7 +54,7 @@ public class LoginFromController {
         userDto.setUsername(username);
         userDto.setPassword(password);
 
-        if (loginDAO.validateLogin(username, password)) {
+        if (loginBO.validateLogin(username, password)) {
             navigateToMainWindow();
         } else {
             new Alert(Alert.AlertType.INFORMATION, "Login Failed ! Try Again").show();

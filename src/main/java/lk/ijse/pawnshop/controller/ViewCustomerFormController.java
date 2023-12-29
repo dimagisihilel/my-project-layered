@@ -11,6 +11,8 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import lk.ijse.pawnshop.bo.BOFactory;
+import lk.ijse.pawnshop.bo.custom.CustomerBO;
 import lk.ijse.pawnshop.dao.custom.CustomerDAO;
 import lk.ijse.pawnshop.dao.custom.impl.CustomerDAOImpl;
 import lk.ijse.pawnshop.db.DbConnection;
@@ -43,7 +45,8 @@ public class ViewCustomerFormController {
     public Button btnAddCustomer;
     public Button btnViewCustomer;
     public Button btnPrintCus;
-    CustomerDAO customerDAO = new CustomerDAOImpl();
+    //CustomerDAO customerDAO = new CustomerDAOImpl();
+    CustomerBO customerBO = (CustomerBO) BOFactory.getBoFactory().getBO(BOFactory.BOType.CUSTOMER);
 
     public void initialize(){
         setData();
@@ -53,7 +56,7 @@ public class ViewCustomerFormController {
     private void setData(){
         ArrayList<CustomerTm> customerTms = new ArrayList<>();
         try {
-            List<CustomerDto> allCustomers = customerDAO.getAll();
+            List<CustomerDto> allCustomers = customerBO.getAllCustomers();
             for (CustomerDto customer : allCustomers) {
                 CustomerTm customerTm = convertDtoToTm(customer);
                 customerTms.add(customerTm);
@@ -111,7 +114,7 @@ public class ViewCustomerFormController {
                 customerDto.setAddress(addressField1.getText());
                 customerDto.setEmail(emailField1.getText());
 
-                boolean isUpdated = customerDAO.update(customerDto);
+                boolean isUpdated = customerBO.updateCustomer(customerDto);
                 if(isUpdated){
                     new Alert(Alert.AlertType.INFORMATION, "Customer updated successfully").show();
                     refreshTable();
@@ -132,7 +135,7 @@ public class ViewCustomerFormController {
                 return;
             }
             try{
-                boolean isDeleted = customerDAO.delete(customerDto.getId());
+                boolean isDeleted = customerBO.deleteCustomer(customerDto.getId());
                 if(isDeleted){
                     new Alert(Alert.AlertType.INFORMATION, "Customer deleted successfully").show();
                     refreshTable();
@@ -158,7 +161,7 @@ public class ViewCustomerFormController {
 
     public void refreshTable(){
         try{
-            List<CustomerDto> allCustomers = customerDAO.getAll();
+            List<CustomerDto> allCustomers = customerBO.getAllCustomers();
             ObservableList<CustomerTm> observableList = FXCollections.observableArrayList();
             for (CustomerDto customerDto : allCustomers) {
                 observableList.add(convertDtoToTm(customerDto));
